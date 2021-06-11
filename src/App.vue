@@ -34,9 +34,6 @@
     methods: {
       addToDo(toDoLabel) {
 
-        if(this.label=== ''){
-          return;
-        }
         this.ToDoItems.push({id:uniqueId('todo-'), label: toDoLabel, done: false});
       }
     }
