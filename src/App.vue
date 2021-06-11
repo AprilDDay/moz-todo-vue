@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>To-Do List</h1>
-      <to-do-form></to-do-form>
+      <to-do-form @todo-added="addToDo"></to-do-form>
       <ul>
           <li v-for="item in ToDoItems" :key="item.id">
               <to-do-item :label="item.label" :done="item.done" :id="item.id"></to-do-item>
@@ -30,7 +30,17 @@
           { id: uniqueId('todo-'), label: 'Create a to-do list', done: false }
         ]
       };
+    },
+    methods: {
+      addToDo(toDoLabel) {
+
+        if(this.label=== ''){
+          return;
+        }
+        this.ToDoItems.push({id:uniqueId('todo-'), label: toDoLabel, done: false});
+      }
     }
+
   };
 
 </script>
