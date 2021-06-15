@@ -7,7 +7,7 @@
     <label :for="id" class="checkbox-label">{{ label }}</label>
   </div>
   <div class="btn-group">
-    <button type="button" class="btn" @click="toggleToDoItemEditForm">
+    <button type="button" class="btn" ref="editButton" @click="toggleToDoItemEditForm">
       Edit <span class="visually-hidden">{{label}}</span>
     </button>
     <button type="button" class="btn btn_danger" @click="deleteToDo">
@@ -29,38 +29,47 @@
   export default {
       components: {
         ToDoItemEditForm
-      },
+      },//end components section
       props: {
           label: { required: true, type: String },
             done: { default: false, type: Boolean },
             id: { require: true, type: String}
-      },
+      },//end props section
       data() {
           return{
               //isDone: this.done,
               isEditing: false
-          };
+          };//end data section
       },
       computed: {
         isDone(){
           return this.done;
         }
-      },
+      },//end computed section
       methods: {
         deleteToDo(){
           this.$emit('item-deleted');
         },
         toggleToDoItemEditForm() {
+          console.log(this.$refs.editButton);
           this.isEditing = true;
         },
         itemEdited(newLabel){
           this.$emit('item-edited', newLabel);
           this.isEditing = false;
+          this.focusOnEditButton();
         },
         editCancelled() {
           this.isEditing = false;
+          this.focusOnEditButton();
+        },
+        focusOnEditButton(){
+          this.$$nextTick(() => {
+              const editButtonRef = this.$refs.editButton;
+              editButtonRef.focus();
+            });
         }
-      }
+      }//end methods section
   };
 </script>
 
